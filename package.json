@@ -1,7 +1,7 @@
 {
-  "name": "webpack-package",
+  "name": "@hexlet/code",
   "version": "0.1.0",
-  "description": "",
+  "description": "[![github action status](https://github.com/hexlet-boilerplates/webpack-package/workflows/Node%20CI/badge.svg)](https://github.com/hexlet-boilerplates/webpack-package/actions) [![Code Climate](https://codeclimate.com/github/hexlet-boilerplates/webpack-package/badges/gpa.svg)](https://codeclimate.com/github/hexlet-boilerplates/webpack-package)",
   "type": "module",
   "scripts": {
     "test": "jest --colors"
@@ -57,5 +57,9 @@
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.0",
     "npm-check-updates": "^16.6.2"
-  }
+  },
+  "keywords": [
+    "RSS",
+    "aggregator"
+  ]
 }
