@@ -3,28 +3,51 @@ import * as yup from 'yup';
 import './style.scss';
 
 const form = document.querySelector('.rss-form');
+const input = document.querySelector('#url-input');
 
-if (form instanceof HTMLFormElement) {
-  form.addEventListener('submit', (e) => {
-    e.preventDefault();
-    const formData = new FormData(form);
-    console.log(formData.entries());
+const existingUrls = []; // Replace with your existing URLs array
 
-    const schema = yup.object().shape({
-      url: yup.string().required('Url is required'),
-    });
+const validationSchema = yup.object().shape({
+  url: yup.string().url('Invalid URL format').test('unique', 'URL is duplicated', (value) => !existingUrls.includes(value)),
+});
 
-    schema
-      .validate(formData)
-      .then((validatedData) => {
-        // Form data is valid
-        console.log(validatedData);
-      })
-      .catch((validationError) => {
-        // Form data is invalid
-        console.error(validationError.errors);
-      });
-  });
+function resetForm() {
+  // @ts-ignore
+  input.value = '';
+  // @ts-ignore
+  input.style.border = '';
+  // @ts-ignore
+  input.focus();
 }
 
-console.log(1);
+function showValidationError(errorMessage) {
+  // @ts-ignore
+  input.style.border = '2px solid red';
+  // @ts-ignore
+  input.focus();
+
+  const feedback = document.querySelector('.feedback');
+  // @ts-ignore
+  feedback.textContent = errorMessage;
+}
+
+async function validateUrl(url) {
+  try {
+    await validationSchema.validate({ url });
+    // URL is valid
+    resetForm();
+  } catch (error) {
+    // URL is invalid
+    showValidationError(error.message);
+  }
+}
+
+function handleEvent(event) {
+  event.preventDefault();
+  // @ts-ignore
+  const url = input.value.trim();
+  validateUrl(url);
+}
+
+// @ts-ignore
+form.addEventListener('submit', handleEvent);
